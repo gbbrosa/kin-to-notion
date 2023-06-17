@@ -1,0 +1,33 @@
+name: Sync Kindle Highlights
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-highlights:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Extract quotes
+        run: python extract_quotes.py
+
+      - name: Set up Environment File
+        run: |
+          echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> $GITHUB_ENV
+          echo "BOOK_DB_ID=763bfcabbea64a7e8df9ce8753836ad2" >> $GITHUB_ENV
+        env:
+          NOTION_API_KEY ${{ secrets.NOTION_API_KEY }}
+
+      - name: Create pages in Notion
+        run: python create_pages.py
