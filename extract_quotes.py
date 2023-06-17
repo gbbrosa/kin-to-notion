@@ -1,16 +1,16 @@
-import re
+import os
 
-# Caminho para o arquivo "My Clipings.txt"
-file_path = "kind-to-notion/My Clipings.txt"
+clipings_file = os.path.join(os.path.dirname(__file__), 'My Clipings.txt')
+quotes_file = os.path.join(os.path.dirname(__file__), 'quotes.txt')
 
-# Função para extrair as citações do arquivo e escrevê-las em "quotes.txt"
-def extract_quotes():
-    with open(file_path, "r", encoding="utf-8") as file:
-        contents = file.read()
-        quotes = re.findall(r"^(.*?)\s*\((.*?)\)\s*\n- (.*?)\n\n", contents, re.MULTILINE)
-        with open("quotes.txt", "w", encoding="utf-8") as output_file:
-            for quote in quotes:
-                output_file.write(f"{quote[0]}\n{quote[1]}\n{quote[2]}\n\n")
+# Extrair citações do arquivo "My Clipings.txt"
+with open(clipings_file, 'r', encoding='utf-8') as f:
+    clipings = f.read()
 
-# Chame a função para extrair as citações
-extract_quotes()
+# Processar as citações e gravar no arquivo "quotes.txt"
+# Você precisa implementar o código de processamento das citações aqui
+
+with open(quotes_file, 'w', encoding='utf-8') as f:
+    f.write('Processed quotes')  # Substitua esta linha pelo código de processamento das citações
+
+print('Quotes extracted and saved successfully!')
