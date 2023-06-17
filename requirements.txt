@@ -1,1 +1,2 @@
-notion==0.5.4
+python-dotenv
+notion
